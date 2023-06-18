@@ -1,0 +1,9 @@
+- name: test
+  hosts: pfsense
+  remote_user: root
+  tasks:
+  - name: Add interface
+  pfsense_interface:
+    descr: blahblah
+    interface: vtnet1
+    enable: True
