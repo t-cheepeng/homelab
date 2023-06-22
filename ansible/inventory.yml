@@ -1,0 +1,9 @@
+network:
+  hosts:
+    pfsense:
+      ansible_host: 192.168.1.216
+      ansible_user: root
+
+proxmox:
+  children:
+    network:

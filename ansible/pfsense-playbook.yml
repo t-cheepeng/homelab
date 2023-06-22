@@ -1,9 +1,17 @@
-- name: test
+- name: 
   hosts: pfsense
-  remote_user: root
   tasks:
-  - name: Add interface
-  pfsense_interface:
-    descr: blahblah
-    interface: vtnet1
-    enable: True
+    - name: ping
+      ansible.builtin.ping:
+    - name: Test pfsensible core
+      pfsensible.core.pfsense_interface:
+        blockbogons: false
+        blockpriv: false
+        enable: true
+        descr: "LAN"
+        interface: "vtnet1"
+        ipv4_address: "192.168.2.1"
+        # ipv4_gateway: "192.168.2.0"
+        ipv4_prefixlen: 24
+        ipv4_type: "static"
+        state: "present"
