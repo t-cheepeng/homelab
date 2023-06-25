@@ -4,6 +4,14 @@ network:
       ansible_host: 192.168.1.216
       ansible_user: root
 
-proxmox:
+proxmox_ve:
+  hosts:
+    proxmox:
+      ansible_host: 192.168.1.253
+      ansible_user: root
+      ansible_ssh_private_key_file: ~/.ssh/proxmox_ed25519
+
+homelab:
   children:
     network:
+    proxmox_ve:

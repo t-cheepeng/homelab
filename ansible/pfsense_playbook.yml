@@ -11,7 +11,6 @@
         descr: "LAN"
         interface: "vtnet1"
         ipv4_address: "192.168.2.1"
-        # ipv4_gateway: "192.168.2.0"
         ipv4_prefixlen: 24
         ipv4_type: "static"
         state: "present"

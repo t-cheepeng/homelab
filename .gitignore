@@ -36,3 +36,6 @@ override.tf.json
 terraform.rc
 
 .vscode
+
+# Ignore ansible vault password files
+*pwd_file
