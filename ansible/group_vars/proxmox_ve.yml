@@ -1,0 +1,3 @@
+template_name: blah
+new_template_name: debian_11_dnsmasq.tar.gz
+dnsmasq_hostname: internal-dns-dhcp

@@ -1,0 +1,42 @@
+- name: Configure internal Dnsmasq
+  hosts: dnsmasq
+  vars:
+    tmp_folder: "/tmp/ansible-internal-dnsmasq"
+    dnsmasq_d_folder: "/etc/dnsmasq.d"
+  tasks:
+    - name: Create temporary folder for dhcpd config files
+      ansible.builtin.file:
+        path: "{{ tmp_folder }}"
+        state: directory
+
+    - name: Copy hosts file to tmp folder
+      ansible.builtin.copy:
+        src: "../files/hosts"
+        dest: "{{ tmp_folder }}/hosts"
+
+    - name: Copy dhcpd.conf to dnsmasq config directory
+      ansible.builtin.copy:
+        src: "../files/dnsmasq.conf"
+        dest: "{{ dnsmasq_d_folder }}/dnsmasq.conf"
+
+    - name: Stop dnsmasq service
+      ansible.builtin.command: "systemctl stop dnsmasq"
+      changed_when: true
+
+    - name: Stop and disable systemd-resolved service
+      ansible.builtin.command: "systemctl stop systemd-resolved && systemctl disable systemd-resolved"
+      changed_when: true
+      ignore_errors: true
+
+    - name: Move hosts file with DNS records to /etc/hosts
+      ansible.builtin.command: "mv {{ tmp_folder }}/hosts /etc/hosts"
+      changed_when: true
+
+    - name: Start and enable dnsmasq service
+      ansible.builtin.command: "systemctl start dnsmasq"
+      changed_when: true
+
+    - name: Remove temporary folder
+      ansible.builtin.file:
+        path: "{{ tmp_folder }}"
+        state: absent

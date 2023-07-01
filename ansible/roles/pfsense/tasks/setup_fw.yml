@@ -1,0 +1,47 @@
+- name: Setup firewall rules
+  hosts: pfsense
+  vars_files:
+    - "../var/pfsense_var.yml"
+  ignore_errors: false
+  tasks:
+    - name: Allow control node to access web GUI on pfsense WAN
+      pfsensible.core.pfsense_rule:
+        action: pass
+        source: "{{ hostvars['control_node'].ansible_host }}"
+        destination: (self)
+        destination_port: 443
+        interface: wan
+        name: Allow control node https
+        protocol: tcp
+        state: present
+
+    - name: Allow control node to SSH to pfsense WAN
+      pfsensible.core.pfsense_rule:
+        action: pass
+        source: "{{ hostvars['control_node'].ansible_host }}"
+        destination: (self)
+        destination_port: "{{ ssh_port }}"
+        interface: wan
+        name: Allow control node ssh
+        protocol: tcp
+        state: present
+
+    - name: Allow control node to access internal subnet
+      pfsensible.core.pfsense_rule:
+        action: pass
+        source: "{{ hostvars['control_node'].ansible_host }}"
+        destination: NET:lan
+        interface: wan
+        name: Allow control node access to internal subnet
+        protocol: any
+        state: present
+
+    - name: Allow LAN to any LAN
+      pfsensible.core.pfsense_rule:
+        action: pass
+        source: NET:lan
+        destination: NET:lan
+        interface: lan
+        name: Allow LAN to any LAN
+        protocol: any
+        state: present

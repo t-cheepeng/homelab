@@ -1,0 +1,27 @@
+network:
+  hosts:
+    pfsense:
+      ansible_host: 192.168.1.248
+      ansible_user: root
+      ansible_ssh_private_key_file: ~/.ssh/cheepeng_main_ed25519
+    dnsmasq:
+      ansible_host: 192.168.2.1
+      ansible_user: root
+      ansible_ssh_private_key_file: ~/.ssh/cheepeng_main_ed25519
+
+proxmox_ve:
+  hosts:
+    proxmox:
+      ansible_host: 192.168.1.253
+      ansible_user: root
+      ansible_ssh_private_key_file: ~/.ssh/proxmox_ed25519
+
+home_network:
+  hosts:
+    control_node: 
+      ansible_host: 192.168.1.249
+
+homelab:
+  children:
+    network:
+    proxmox_ve:

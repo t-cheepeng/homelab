@@ -1,0 +1,24 @@
+- name: Enable SSHD on dnsmasq container via proxmox
+  hosts: proxmox
+  vars_files:
+    - ../../../vault/proxmox_vault.yml
+    - ../../../group_vars/proxmox_ve.yml
+  tasks:
+    - name: Ensure dnsmasq container is alive
+      community.general.proxmox:
+        node: pve
+        api_user: ansible-user@pam
+        api_host: pve
+        api_token_id: ansible-token
+        api_token_secret: "{{ ansible_user_api_token_secret }}"
+        hostname: "{{ dnsmasq_hostname }}"
+        state: started
+      register: ct_start
+
+    - name: Permit root login on SSHD and enable SSHD
+      ansible.builtin.command: "pct exec {{ ct_start.msg | regex_search('[0-9]+') }} -- {{ item }}"
+      with_items:
+        - bash -c "echo PermitRootLogin yes | tee -a /etc/ssh/sshd_config"
+        - "systemctl stop ssh"
+        - "systemctl enable ssh"
+        - "systemctl start ssh"
