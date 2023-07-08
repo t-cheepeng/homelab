@@ -19,6 +19,9 @@ variable "geneirc_linux_os_debian_vm_template" {
 variable "pfsense_template" {
   default = "pfsense-template"
 }
+variable "truenas_template" {
+  default = "TrueNAS-13.0-U5.1.iso"
+}
 
 #Establish which nic you would like to utilize
 variable "internal_nic_name" {
@@ -30,14 +33,14 @@ variable "external_nic_name" {
 
 # Storage pool variables
 variable "storage_pool" {
-  default = "local-lvm"
+  default = "vm-storage"
 }
 
 #Provide the url of the host you would like the API to communicate on.
 #It is safe to default to setting this as the URL for what you used
 #as your `proxmox_host`, although they can be different
 variable "api_url" {
-  default = "https://pve:8006/api2/json"
+  default = "https://pve.localdomain:8006/api2/json"
 }
 #Blank var for use by terraform.tfvars
 variable "token_secret" {
