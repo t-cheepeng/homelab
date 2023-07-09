@@ -53,3 +53,5 @@ There are some steps that need to be done on Proxmox fresh install in order to e
 4. For TrueNAS VMs, the BIOS to be used is OVMF. Otherwise, during installation, there is a need to install for BIOS instead of UEFI. If using OVMF, there needs to be a manual addition of a EFI disk in a storage pool. When creating the disk, uncheck the option `pre-enroll-keys`. This disabled secure boot which is a windows specific option. It should not be enabled for trusted TrueNAS ISOs.
 
 5. Adding a PCI passthrough requires going to the `Hardware` section of the VM. Click on `Add` and `PCI device`. Select the PCI device to passthrough and check the `Full Functionality` if required. Ensure IOMMU is enabled as KB.3.
+
+6. For laptop environments with a lid, in order to keep the lid from making the laptop go to sleep, run `cat /proc/acpi/wakeup` to find the path of the lid switch. In the output, there will be a line starting with `LID0`. Take note of the path that says `platform:PNP0C0D:00`. Run the command `echo 'PNP0C0D:00' | sudo tee /sys/bus/acpi/drivers/button/unbind`, replacing the echo with the appropriate path to unbind the lid switch.

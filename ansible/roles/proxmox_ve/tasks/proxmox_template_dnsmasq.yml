@@ -1,8 +1,8 @@
 - name: Create Proxmox template for Dnsmasq
   hosts: proxmox
   vars_files:
-    - ./proxmox_template_vars.yml
-    - ./proxmox_vault.yml
+    - ../../../group_vars/proxmox_ve.yml
+    - ../../../vault/proxmox_vault.yml
   tasks:
     - name: Check template
       ansible.builtin.shell: pveam list local | grep -i {{ template_name }}
@@ -18,13 +18,13 @@
 
     - name: Deploy CT from base template
       community.general.proxmox:
-        node: pve
+        node: pve-staging
         api_user: ansible-user@pam
-        api_host: pve
+        api_host: pve-staging
         api_token_id: ansible-token
         api_token_secret: "{{ ansible_user_api_token_secret }}"
         hostname: ansible-create-lxc-template
-        ostemplate: "local:vztmpl/debian-11-standard_11.7-1_amd64.tar.zst"
+        ostemplate: "local:vztmpl/debian-11-standard_11.3-1_amd64.tar.zst"
         storage: local-lvm
         password: password
         netif: '{"net0":"name=eth0,ip=dhcp,ip6=dhcp,bridge=vmbr0"}'
@@ -41,9 +41,9 @@
 
     - name: Start up CT template container
       community.general.proxmox:
-        node: pve
+        node: pve-staging
         api_user: ansible-user@pam
-        api_host: pve
+        api_host: pve-staging
         api_token_id: ansible-token
         api_token_secret: "{{ ansible_user_api_token_secret }}"
         hostname: "ansible-create-lxc-template"
@@ -58,9 +58,9 @@
     
     - name: Stop template container
       community.general.proxmox:
-        node: pve
+        node: pve-staging
         api_user: ansible-user@pam
-        api_host: pve
+        api_host: pve-staging
         api_token_id: ansible-token
         api_token_secret: "{{ ansible_user_api_token_secret }}"
         hostname: "ansible-create-lxc-template"
@@ -102,9 +102,9 @@
     
     - name: Remove template container
       community.general.proxmox:
-        node: pve
+        node: pve-staging
         api_user: ansible-user@pam
-        api_host: pve
+        api_host: pve-staging
         api_token_id: ansible-token
         api_token_secret: "{{ ansible_user_api_token_secret }}"
         hostname: "ansible-create-lxc-template"
