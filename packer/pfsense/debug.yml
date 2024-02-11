@@ -1,0 +1,20 @@
+---
+- name: 'Setup any other additional steps required for pfsense'
+  hosts: all
+  vars_files:
+    - ./vault.yml
+
+  tasks:
+    - name: Setup pfsense user
+      pfsensible.core.pfsense_user:
+        name: 'pfsense_user'
+        priv: [ 'page-all', 'user-shell-acess' ]
+        scope: 'user'
+        state: present
+        password: "{{ pfsense_user_password }}"
+        authorizedkeys: "{{ ssh_pub_key | b64encode }}"
+    - name: Change admin password
+      pfsensible.core.pfsense_user:
+        name: 'admin'
+        password: "{{ pfsense_admin_password }}"
+    

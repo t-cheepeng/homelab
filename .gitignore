@@ -39,3 +39,7 @@ terraform.rc
 
 # Ignore ansible vault password files
 *pwd_file
+
+# Ignore ssh keys and secrets
+ssh_keys
+secrets

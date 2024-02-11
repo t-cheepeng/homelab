@@ -4,11 +4,7 @@ network:
       ansible_host: 192.168.1.248
       ansible_user: root
       ansible_ssh_private_key_file: ~/.ssh/cheepeng_main_ed25519
-    dnsmasq:
-      ansible_host: 192.168.2.1
-      ansible_user: root
-      ansible_ssh_private_key_file: ~/.ssh/cheepeng_main_ed25519
-
+    
 proxmox_ve:
   hosts:
     proxmox:

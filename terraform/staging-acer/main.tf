@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "Telmate/proxmox"
-      version = "2.9.14"
+      version = "3.0.1-rc1"
     }
   }
 }
@@ -25,10 +25,10 @@ module "pfsense" {
   proxmox_host = var.proxmox_host
 }
 
-module "application" {
-  source = "../modules/application"
-  proxmox_host = var.proxmox_host
-  nic = var.lan_nic
-  os_template = var.debian_iso
-  size = "50G"
-}
+# module "application" {
+#   source = "../modules/application"
+#   proxmox_host = var.proxmox_host
+#   nic = var.lan_nic
+#   os_template = var.debian_iso
+#   size = "50G"
+# }

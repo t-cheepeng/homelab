@@ -1,0 +1,22 @@
+---
+- name: 'Provision pfsense image'
+  hosts: all
+
+  tasks:
+    - name: Unblock private networks on WAN
+      pfsensible.core.pfsense_interface:
+        ipv4_type: dhcp
+        interface: vtnet0
+        enable: true
+        descr: WAN
+        blockbogons: true
+        blockpriv: false
+      async: 60
+      poll: 0
+
+    - name: Reset connection
+      meta: reset_connection
+
+    - name: Pause for interface to take effect
+      ansible.builtin.pause:
+        seconds: 10
