@@ -10,6 +10,9 @@ variable "pfsense_template" {
 variable "debian_iso" {
   default = "debian_12.4.0_amd64.iso"
 }
+variable "debian_ct" {
+  default = "debian-12-standard_12.2-1_amd64.tar.zst"
+}
 
 #Establish which nic you would like to utilize
 variable "wan_nic" {
@@ -39,4 +42,13 @@ variable "token_id" {
 #Blank var for use by terraform.tfvars
 variable "ssh_public_keys" {
 
+}
+
+# Hostnames
+variable "app_hostname" {
+  default = "ct-application"
+}
+
+variable "vpn_hostname" {
+  default = "ct-vpn"
 }

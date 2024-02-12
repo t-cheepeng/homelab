@@ -15,6 +15,8 @@ resource "proxmox_vm_qemu" "pfsense" {
   full_clone  = true
   onboot      = true
   vm_state    = "running"
+  qemu_os     = "other"
+  desc        = "pfsense, generated on 2024-02-12T02:22:28Z"
 
   #   # VM sizing
   memory  = var.memory

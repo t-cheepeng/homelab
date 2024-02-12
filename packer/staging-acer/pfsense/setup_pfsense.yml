@@ -17,6 +17,27 @@
       pfsensible.core.pfsense_user:
         name: 'admin'
         password: "{{ pfsense_admin_password }}"
+    
+    - name: Setup LAN interface
+      pfsensible.core.pfsense_interface:
+        blockbogons: true
+        blockpriv: false
+        descr: LAN
+        enable: true
+        ipv4_address: "192.168.2.254"
+        interface: vtnet1
+        ipv4_prefixlen: 24
+        ipv4_type: static
+        state: present
+
+    - name: Allow control node to LAN subnet
+      pfsensible.core.pfsense_rule:
+        action: pass
+        interface: WAN
+        name: 'Allow control node to LAN subnet'
+        source: 192.168.1.249
+        destination: 'NET:lan'
+        state: present
 
     - name: Unblock private networks on WAN
       pfsensible.core.pfsense_interface:

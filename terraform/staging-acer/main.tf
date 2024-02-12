@@ -25,10 +25,22 @@ module "pfsense" {
   proxmox_host = var.proxmox_host
 }
 
-# module "application" {
-#   source = "../modules/application"
-#   proxmox_host = var.proxmox_host
-#   nic = var.lan_nic
-#   os_template = var.debian_iso
-#   size = "50G"
-# }
+module "ct_application" {
+  source = "../modules/application/ct"
+  proxmox_host = var.proxmox_host
+  nic = var.lan_nic
+  lxc_template = var.debian_ct
+  password = "password"
+  hostname = var.app_hostname
+  ip = "192.168.2.1/24"
+  gw = "192.168.2.254"
+}
+
+module "ct_vpn" {
+  source = "../modules/vpn"
+  proxmox_host = var.proxmox_host
+  nic = var.wan_nic
+  lxc_template = var.debian_ct
+  password = "password"
+  hostname = var.vpn_hostname
+}

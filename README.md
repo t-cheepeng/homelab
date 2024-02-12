@@ -12,10 +12,6 @@ This repository holds the terraform and ansible files for homelab deployments. A
 
 - Deploy Tracket to Homelab
 
-- Migrate bare metal TrueNAS over to Proxmox on PC
-
-- Have laptop as a secondary PVE node?
-
 ## Homelab initialization for Proxmox
 
 ### Background
@@ -55,3 +51,15 @@ There are some steps that need to be done on Proxmox fresh install in order to e
 5. Adding a PCI passthrough requires going to the `Hardware` section of the VM. Click on `Add` and `PCI device`. Select the PCI device to passthrough and check the `Full Functionality` if required. Ensure IOMMU is enabled as KB.3.
 
 6. For laptop environments with a lid, in order to keep the lid from making the laptop go to sleep, run `cat /proc/acpi/wakeup` to find the path of the lid switch. In the output, there will be a line starting with `LID0`. Take note of the path that says `platform:PNP0C0D:00`. Run the command `echo 'PNP0C0D:00' | sudo tee /sys/bus/acpi/drivers/button/unbind`, replacing the echo with the appropriate path to unbind the lid switch.
+
+## TODO 
+
+1. Add more firewall rules to allow only manjaroPC and Phone to enter internal subnet
+
+2. Retry packer build for pfsense
+
+3. Use packer to create piVPN container with LXC builder
+
+4. Where to best place the static routes? In the home router or on VPN container? 
+
+5. Draw out network diagram for applications

@@ -1,0 +1,5 @@
+---
+- name: 'Debug'
+  hosts: all
+  
+  tasks:
