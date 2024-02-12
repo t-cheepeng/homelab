@@ -1,8 +1,23 @@
 ---
 - name: 'Provision pfsense image'
   hosts: all
+  vars_files:
+    - ./vault.yml
 
   tasks:
+    - name: Setup pfsense user
+      pfsensible.core.pfsense_user:
+        name: 'pfsense_user'
+        priv: [ 'page-all', 'user-shell-acess' ]
+        scope: 'user'
+        state: present
+        password: "{{ pfsense_user_password }}"
+        authorizedkeys: "{{ ssh_pub_key | b64encode }}"
+    - name: Change admin password
+      pfsensible.core.pfsense_user:
+        name: 'admin'
+        password: "{{ pfsense_admin_password }}"
+
     - name: Unblock private networks on WAN
       pfsensible.core.pfsense_interface:
         ipv4_type: dhcp
@@ -14,9 +29,9 @@
       async: 60
       poll: 0
 
-    - name: Reset connection
-      meta: reset_connection
-
     - name: Pause for interface to take effect
       ansible.builtin.pause:
         seconds: 10
+
+    - name: Reset connection
+      meta: reset_connection

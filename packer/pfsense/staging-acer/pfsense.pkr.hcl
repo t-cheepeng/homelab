@@ -124,6 +124,6 @@ build {
     galaxy_file   = "./requirements.yml"
     playbook_file = "./setup_pfsense.yml"
     # Required on SSH >= 9.0 as default is sftp which is not supported yet
-    extra_arguments = ["--scp-extra-args", "'-O'"]
+    extra_arguments = ["--scp-extra-args", "'-O'", "--vault-password-file=pwd_file"]
   }
 }
