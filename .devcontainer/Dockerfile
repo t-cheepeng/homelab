@@ -45,5 +45,8 @@ ENV LC_ALL en_US.UTF-8
 RUN apt install -y packer
 RUN apt install -y sshpass
 
+# Install LXC
+RUN apt-get install -y lxc
+
 # Clean up
 RUN apt clean

@@ -4,6 +4,7 @@
     "dockerfile": "Dockerfile"
   },
   "runArgs": [
+    "--privileged",
     "--add-host=homelab-staging:192.168.1.253 ",
     "--add-host=homelab-acer:192.168.1.243 "
   ],
